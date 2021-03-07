@@ -7,11 +7,6 @@ function Inventory(props) {
 
 
     const [barang, setBarang] = useState( [{}] )
-    // const [trigger, setTrigger] = useState(false)
-    // const [barangID, setBarangID] = useState("")
-
-
-  
 
     let local = localStorage.getItem("user")
     let localObj = JSON.parse(local)
