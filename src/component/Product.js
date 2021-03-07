@@ -8,6 +8,14 @@ function product(props) {
     let local = localStorage.getItem("user")
     let localObj = JSON.parse(local)
 
+
+
+    function summonModal (param) {
+        props.setShow(true)
+        props.setIdBarang(props.id)
+        props.setNamaBarang(props.name)
+    }
+
     function deleteData (param){
         
         axios.delete(`https://6023a8436bf3e6001766b514.mockapi.io/login-app/${localObj[0].id}/barang/${param}`)
@@ -15,6 +23,8 @@ function product(props) {
        
     }
 
+    // props.setIdBarang
+    // props.setNamaBarang
 
     function updateData () {
         console.log("id user " +localObj[0].id)
@@ -34,7 +44,7 @@ function product(props) {
     return (
         <div className="d-flex mb-1">
             
-            <button type="button" className="btn btn-outline-secondary rounded-0" onClick={updateData} >Update</button>
+            <button type="button" className="btn btn-outline-secondary rounded-0" onClick={summonModal} >Update</button>
                 <a className="list-group-item list-group-item-action " >{props.name}</a>
             <button type="button" className="btn btn-outline-secondary rounded-0" onClick={()=> deleteData(props.id) }>Delete</button>
 

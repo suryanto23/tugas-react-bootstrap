@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState } from 'react';
+import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import Inventory from '../component/Inventory.js'
 import LogoutButton from '../component/LogoutButton.js'
+import {Modal} from 'react-bootstrap'
+
 
 
 import {Button , Alert , Breadcrumb , Card , Container , Row , Col , Form , Badge} from 'react-bootstrap';
@@ -14,6 +17,12 @@ import avatar from "../asset/logo-user.png"
 
 function Profile() {
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [idBarang, setIdBarang] = useState("");
+    const [namaBarang, setNamaBarang] = useState("");
+    const [val, setVal] = useState("");
     let local = localStorage.getItem("user")
     let localObj = JSON.parse(local)
     const history = useHistory();
@@ -31,6 +40,18 @@ function Profile() {
         
       });
 
+      function track  (param) {
+        setVal(param.target.value)
+    }
+
+    function print  (param) {
+     
+       axios.put(`https://6023a8436bf3e6001766b514.mockapi.io/login-app/${localObj[0].id}/barang/${idBarang}` , {produk : val})
+       .then(result => console.log(result.data))
+       setShow(false)
+
+    }
+
       
 
      function logout  ()  {
@@ -46,40 +67,13 @@ function Profile() {
 
 
 
+
     return (
         <>
 
 
             { localStorage.user ? 
             <>
-                {/* <div className="container userProfile">
-
-                        <div className="row my-4  text-center" >
-                            <div className="col-12">
-                              <h1>Profile</h1>
-                            </div>  
-                        </div>
-                        <div className="row text-center " > 
-                            <div className="col-12">
-                                <img src={avatar} class="rounded" alt="avatar" />
-                            </div>  
-                        </div>
-                        <div className="row text-center" > 
-                            <div className="col-12">
-                              <h2 className="display-4">{localObj[0].name}</h2>
-                            </div>
-                        </div>
-                        <div className="row text-center mb-5" > 
-                            <div className="col-12">
-                             <LogoutButton/>
-                            </div>
-                        </div>
-                        
-                        
-                        <Inventory/>
-
-                </div> */}
-
                 <Container>
                     <Row className="text-center"> 
                         <Col>
@@ -107,9 +101,30 @@ function Profile() {
 
                     <Row>
                         <Col>
-                           <Inventory/>
+                           <Inventory setShow={setShow} setIdBarang={setIdBarang} setNamaBarang={setNamaBarang}/>
                         </Col>
                     </Row>
+
+                    <Modal show={show} onHide={handleClose}>
+                        
+                            <Modal.Body>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label>Edit Data</Form.Label>
+                                        <Form.Control defaultValue={namaBarang} onChange={track} />
+                                    </Form.Group>
+                                </Form>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={print}>
+                                    Save
+                                </Button>
+                            </Modal.Footer>
+                    </Modal>
 
                     
 
@@ -122,15 +137,6 @@ function Profile() {
                 // Falsy condition return nothingss
                 : <div></div>
             }
-
-
-
-            
-            
-            
-
-            
-
 
 
         </>

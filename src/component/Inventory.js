@@ -35,9 +35,10 @@ function Inventory(props) {
                             <div class="">
                                     <div>
                                         <div class="list-group mt-4" id="list-tab" role="tablist">
-                                            <div className="d-flex bg-aqua flex-column">
-                                                { barang.map( (items,index)=>{ return  <Product key={index} name={items.produk} id={items.id} />  } ) }
-                                               
+                                            <div className="d-flex flex-column">
+                                                { barang.map( (items,index)=>{ return  <Product key={index} name={items.produk} id={items.id} 
+                                                  setShow={props.setShow} setIdBarang={props.setIdBarang} setNamaBarang={props.setNamaBarang}/> 
+                                                } ) }
                                             </div>
                                         </div>
                                     </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import banner from  "./../asset/banner.jpg"
 import "./../component/style.css"
 
@@ -28,6 +29,8 @@ function Home() {
                     </div>
                 </div>
             </div>
+
+            
 
         </div>
     )
